@@ -45,8 +45,28 @@
         /* --- HEADER --- */
         header { background-color: rgba(10, 10, 10, 0.95); padding: 20px 0; position: fixed; width: 100%; top: 0; z-index: 1000; border-bottom: 1px solid rgba(255,255,255,0.1); }
         nav { display: flex; justify-content: space-between; align-items: center; }
-        .logo { font-family: var(--font-heading); font-size: 1.8rem; font-weight: 700; color: var(--color-light); text-transform: uppercase; text-decoration: none; }
+        
+        /* ESTILOS DEL LOGO (TEXTO E IMAGEN) */
+        .logo { 
+            font-family: var(--font-heading); 
+            font-size: 1.8rem; 
+            font-weight: 700; 
+            color: var(--color-light); 
+            text-transform: uppercase; 
+            text-decoration: none; 
+            display: flex; 
+            align-items: center; 
+        }
         .logo span { color: var(--color-primary); }
+        
+        /* Estilo específico cuando es imagen */
+        #site-logo img {
+            height: 50px; /* Altura fija para alinear con el botón */
+            width: auto;
+            max-width: 200px;
+            object-fit: contain;
+            display: block;
+        }
         
         /* --- HERO --- */
         #hero {
@@ -120,7 +140,7 @@
         .form-group input:focus { border-color: var(--color-primary); outline: none; }
         
         /* Image Upload Styling */
-        .image-upload-wrapper { display: flex; gap: 15px; align-items: start; }
+        .image-upload-wrapper { display: flex; gap: 15px; align-items: center; }
         .img-preview { width: 100px; height: 100px; object-fit: cover; border: 1px solid #444; background: #000; }
         .file-input-box { flex: 1; }
         
@@ -134,6 +154,7 @@
             h1 { font-size: 3rem; }
             .about-grid { grid-template-columns: 1fr; }
             .price-card.featured { transform: scale(1); }
+            #site-logo img { height: 40px; } /* Logo más pequeño en móvil */
         }
     </style>
 </head>
@@ -143,7 +164,8 @@
     <header>
         <div class="container">
             <nav>
-                <a href="#" class="logo" id="site-logo">Team <span>La Furia</span></a>
+                <!-- EL CONTENIDO DE ESTE A SE GENERA CON JS -->
+                <a href="#" class="logo" id="site-logo"></a>
                 <a href="#" id="nav-call-btn" class="btn">LLAMAR</a>
             </nav>
         </div>
@@ -252,6 +274,22 @@
                 <button class="close-modal" onclick="closeAdmin()">×</button>
             </div>
 
+            <!-- SECCIÓN MARCA (LOGO) -->
+            <div class="form-section">
+                <h4>0. Marca e Identidad</h4>
+                <div class="form-group">
+                    <label>Logo (Imagen PNG o JPG)</label>
+                    <div class="image-upload-wrapper">
+                        <!-- Ajuste altura preview para logos -->
+                        <img id="preview-logo" class="img-preview" style="height: auto; aspect-ratio: 2/1;" src="" alt="Vista previa Logo">
+                        <div class="file-input-box">
+                            <input type="file" id="file-logo" accept="image/*" onchange="handleImageUpload(this, 'logo')">
+                            <small style="color: #666">Se recomienda un logo con fondo transparente.</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <!-- SECCIÓN HERO -->
             <div class="form-section">
                 <h4>1. Sección Principal (Hero)</h4>
@@ -269,7 +307,6 @@
                         <img id="preview-hero-bg" class="img-preview" src="" alt="Vista previa">
                         <div class="file-input-box">
                             <input type="file" id="file-hero-bg" accept="image/*" onchange="handleImageUpload(this, 'hero-bg')">
-                            <small style="color: #666">Max 500kb recomendado.</small>
                         </div>
                     </div>
                 </div>
@@ -349,12 +386,12 @@
 
     <!-- LÓGICA JAVASCRIPT -->
     <script>
-        // --- CONFIGURACIÓN POR DEFECTO (LO QUE SE VE AL PRINCIPIO) ---
-        // Puedes editar esto manualmente en el código si lo prefieres.
+        // --- CONFIGURACIÓN POR DEFECTO ---
         const defaultConfig = {
+            logo: "", // Vacío por defecto, mostrará texto
             heroTitle: "Domina tu\nCuerpo",
             heroSub: "Entrenamiento intenso, disciplina sin límites y resultados reales. Únete al equipo y libera tu bestia interior.",
-            heroBg: "https://picsum.photos/seed/gymdark/1920/1080.jpg", // URL o Base64
+            heroBg: "https://picsum.photos/seed/gymdark/1920/1080.jpg", 
             aboutTitle: "Rutinas de Alto Impacto",
             aboutDesc: "En Team La Furia no buscamos excusas. Diseñamos entrenamientos variados adaptados para romper tus límites físicos y mentales.",
             aboutImg: "https://picsum.photos/seed/muscle/600/400",
@@ -367,7 +404,7 @@
             phone: "3764175149"
         };
 
-        let tempConfig = {}; // Para almacenar cambios antes de guardar
+        let tempConfig = {}; 
 
         // 1. INICIALIZAR
         document.addEventListener('DOMContentLoaded', () => {
@@ -378,6 +415,16 @@
 
         // 2. RENDERIZAR (PONER DATOS EN EL HTML)
         function renderSite(config) {
+            // --- LOGO ---
+            const logoEl = document.getElementById('site-logo');
+            if (config.logo && config.logo.trim() !== "") {
+                // Si hay logo, insertar imagen
+                logoEl.innerHTML = `<img src="${config.logo}" alt="Logo">`;
+            } else {
+                // Si no hay logo, poner texto por defecto
+                logoEl.innerHTML = `Team <span>La Furia</span>`;
+            }
+
             // Textos
             document.getElementById('hero-title').innerText = config.heroTitle;
             document.getElementById('hero-sub').innerText = config.heroSub;
@@ -439,6 +486,14 @@
             // Previsualizar imágenes actuales en el admin
             document.getElementById('preview-hero-bg').src = currentConfig.heroBg;
             document.getElementById('preview-about-img').src = currentConfig.aboutImg;
+            
+            // Manejo especial del Logo (si es vacío poner placeholder transparente)
+            if(currentConfig.logo) {
+                document.getElementById('preview-logo').src = currentConfig.logo;
+                document.getElementById('preview-logo').style.display = 'block';
+            } else {
+                document.getElementById('preview-logo').style.display = 'none';
+            }
 
             // Cargar config actual en memoria temporal
             tempConfig = {...currentConfig};
@@ -450,12 +505,12 @@
             document.getElementById('admin-modal').style.display = 'none';
         }
 
-        // 4. MANEJO DE IMÁGENES (FILE READER A BASE64)
+        // 4. MANEJO DE IMÁGENES
         function handleImageUpload(input, key) {
             if (input.files && input.files[0]) {
                 const file = input.files[0];
                 
-                // Validación simple de tamaño (Max 2MB para LocalStorage)
+                // Validación de tamaño
                 if (file.size > 2000000) {
                     alert('La imagen es muy grande. Elige una menor a 2MB o no se guardará.');
                     input.value = ''; 
@@ -465,11 +520,20 @@
                 const reader = new FileReader();
                 reader.onload = function(e) {
                     const base64 = e.target.result;
-                    // Guardar en config temporal
-                    tempConfig[key === 'hero-bg' ? 'heroBg' : 'aboutImg'] = base64;
-                    // Actualizar vista previa en el modal
-                    if(key === 'hero-bg') document.getElementById('preview-hero-bg').src = base64;
-                    if(key === 'about-img') document.getElementById('preview-about-img').src = base64;
+                    
+                    // Mapear keys a config
+                    if (key === 'hero-bg') {
+                        tempConfig.heroBg = base64;
+                        document.getElementById('preview-hero-bg').src = base64;
+                    } else if (key === 'about-img') {
+                        tempConfig.aboutImg = base64;
+                        document.getElementById('preview-about-img').src = base64;
+                    } else if (key === 'logo') {
+                        tempConfig.logo = base64;
+                        const preview = document.getElementById('preview-logo');
+                        preview.src = base64;
+                        preview.style.display = 'block';
+                    }
                 }
                 reader.readAsDataURL(file);
             }
@@ -477,7 +541,6 @@
 
         // 5. GUARDAR TODO
         function saveAll() {
-            // Recoger textos
             tempConfig.heroTitle = document.getElementById('edit-hero-title').value;
             tempConfig.heroSub = document.getElementById('edit-hero-sub').value;
             tempConfig.aboutTitle = document.getElementById('edit-about-title').value;
@@ -490,7 +553,6 @@
             tempConfig.plan2Freq = document.getElementById('edit-plan2-freq').value;
             tempConfig.phone = document.getElementById('edit-phone').value;
 
-            // Guardar en Navegador
             try {
                 localStorage.setItem('laFuriaFullConfig', JSON.stringify(tempConfig));
                 renderSite(tempConfig);
@@ -501,14 +563,10 @@
             }
         }
 
-        // 6. EXPORTAR CÓDIGO (Para hacer permanente en el servidor)
+        // 6. EXPORTAR
         function exportConfig() {
-            // Actualizamos tempConfig con los textos actuales por si no se guardó
             saveAllWithoutAlert(); 
-            
-            // Generar string JS
             const exportString = `const defaultConfig = ${JSON.stringify(tempConfig, null, 4)};`;
-            
             const area = document.getElementById('export-area');
             area.style.display = 'block';
             area.value = `/* Copia esto y reemplaza la variable 'defaultConfig' en tu archivo HTML */\n\n${exportString}`;
