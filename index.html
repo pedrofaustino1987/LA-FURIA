@@ -3,15 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TEAM LA FURIA | Autoadministrable</title>
+    <title>TEAM LA FURIA | CMS Visual</title>
     
-    <!-- Fuentes -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
 
     <style>
-        /* --- VARIABLES (MANTENIDAS DEL DISEÑO ORIGINAL) --- */
+        /* --- ESTILOS GENERALES --- */
         :root {
             --color-primary: #D60000;
             --color-dark: #0a0a0a;
@@ -27,7 +26,6 @@
         html { scroll-behavior: smooth; }
         body { font-family: var(--font-body); background-color: var(--color-dark); color: var(--color-light); line-height: 1.6; overflow-x: hidden; }
 
-        /* --- ESTILOS GENERALES --- */
         .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
         
         .btn {
@@ -53,7 +51,6 @@
         /* --- HERO --- */
         #hero {
             height: 100vh; display: flex; align-items: center; position: relative;
-            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.8)), url('https://picsum.photos/seed/gymdark/1920/1080.jpg');
             background-size: cover; background-position: center; background-attachment: fixed;
         }
         .hero-tag { background-color: var(--color-primary); color: white; padding: 5px 15px; font-family: var(--font-heading); text-transform: uppercase; letter-spacing: 2px; font-size: 1.2rem; display: inline-block; margin-bottom: 20px; transform: skewX(-10deg); }
@@ -61,7 +58,7 @@
         .hero-subtitle { font-size: 1.5rem; color: var(--color-gray); margin-bottom: 40px; max-width: 600px; border-left: 4px solid var(--color-primary); padding-left: 20px; }
 
         /* --- ABOUT --- */
-        #about { padding: 100px 0; background-color: var(--color-dark-gray); position: relative; }
+        #about { padding: 100px 0; background-color: var(--color-dark-gray); }
         .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; align-items: center; }
         .about-text h3 { font-family: var(--font-heading); font-size: 2.5rem; margin-bottom: 20px; text-transform: uppercase; }
         .about-text p { color: var(--color-gray); font-size: 1.1rem; margin-bottom: 20px; }
@@ -79,7 +76,6 @@
         .price-freq { display: block; color: var(--color-primary); font-weight: bold; margin-bottom: 30px; font-size: 1.1rem; text-transform: uppercase; }
         .features-list { list-style: none; margin-bottom: 30px; text-align: left; }
         .features-list li { padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.1); color: var(--color-gray); }
-        .features-list li::before { content: '✖'; color: var(--color-primary); margin-right: 10px; font-weight: bold; }
 
         /* --- CONTACT --- */
         #contact { padding: 80px 0; background: linear-gradient(45deg, var(--color-primary) 0%, #8a0000 100%); text-align: center; color: white; }
@@ -88,40 +84,52 @@
         .contact-btn-large { background-color: white; color: var(--color-primary); border-color: white; padding: 20px 50px; font-size: 1.5rem; }
         .contact-btn-large:hover { background-color: black; color: white; border-color: black; }
 
-        /* --- ADMIN PANEL & MODAL --- */
+        /* --- ADMIN PANEL --- */
         .admin-toggle {
             position: fixed; bottom: 20px; right: 20px; 
-            background: #333; color: #fff; width: 50px; height: 50px; 
+            background: #333; color: #fff; width: 60px; height: 60px; 
             border-radius: 50%; border: 2px solid var(--color-primary);
-            font-size: 24px; cursor: pointer; z-index: 2000;
+            font-size: 28px; cursor: pointer; z-index: 3000;
             display: flex; justify-content: center; align-items: center;
-            opacity: 0.3; transition: 0.3s;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.5); transition: 0.3s;
         }
-        .admin-toggle:hover { opacity: 1; transform: rotate(90deg); }
+        .admin-toggle:hover { transform: rotate(90deg) scale(1.1); }
 
         .modal-overlay {
             display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.8); z-index: 3000;
+            background: rgba(0,0,0,0.9); z-index: 3001;
             justify-content: center; align-items: center;
         }
         .modal-content {
-            background: #1a1a1a; padding: 30px; border: 1px solid #333; width: 90%; max-width: 500px;
-            border-radius: 8px; box-shadow: 0 0 20px rgba(214,0,0,0.2);
+            background: #111; padding: 20px; border: 1px solid #444; width: 90%; max-width: 800px;
+            max-height: 90vh; overflow-y: auto; border-radius: 4px;
         }
-        .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; border-bottom: 1px solid #333; padding-bottom: 10px; }
-        .modal-header h3 { font-family: var(--font-heading); color: var(--color-primary); text-transform: uppercase; }
+        .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; border-bottom: 1px solid #333; padding-bottom: 15px; position: sticky; top: 0; background: #111; z-index: 10;}
+        .modal-header h3 { font-family: var(--font-heading); color: var(--color-primary); text-transform: uppercase; font-size: 1.5rem; }
         .close-modal { background: none; border: none; color: #fff; font-size: 24px; cursor: pointer; }
+
+        /* Form Grid */
+        .form-section { margin-bottom: 30px; padding-bottom: 20px; border-bottom: 1px solid #222; }
+        .form-section h4 { color: white; margin-bottom: 15px; text-transform: uppercase; font-size: 1.1rem; color: var(--color-primary); }
         
         .form-group { margin-bottom: 15px; }
-        .form-group label { display: block; margin-bottom: 5px; color: #888; font-size: 0.9rem; }
+        .form-group label { display: block; margin-bottom: 5px; color: #aaa; font-size: 0.9rem; font-weight: bold; }
         .form-group input, .form-group textarea {
-            width: 100%; background: #0a0a0a; border: 1px solid #333; color: white; padding: 10px; font-family: inherit;
+            width: 100%; background: #050505; border: 1px solid #333; color: white; padding: 10px; font-family: inherit;
         }
         .form-group input:focus { border-color: var(--color-primary); outline: none; }
-        .save-btn { width: 100%; margin-top: 10px; background: var(--color-primary); border: none; padding: 12px; color: white; font-weight: bold; cursor: pointer; text-transform: uppercase; }
-        .save-btn:hover { background: #b00000; }
+        
+        /* Image Upload Styling */
+        .image-upload-wrapper { display: flex; gap: 15px; align-items: start; }
+        .img-preview { width: 100px; height: 100px; object-fit: cover; border: 1px solid #444; background: #000; }
+        .file-input-box { flex: 1; }
+        
+        .save-btn { width: 100%; background: var(--color-primary); color: white; padding: 15px; font-weight: bold; text-transform: uppercase; cursor: pointer; margin-bottom: 10px; }
+        .export-btn { width: 100%; background: #444; color: white; padding: 10px; font-weight: bold; text-transform: uppercase; cursor: pointer; border: none; font-size: 0.8rem; }
+        
+        /* Export Area */
+        #export-area { display: none; width: 100%; height: 200px; background: #000; color: #0f0; font-family: monospace; font-size: 10px; margin-top: 10px; padding: 10px; overflow: auto; }
 
-        /* --- RESPONSIVE --- */
         @media (max-width: 768px) {
             h1 { font-size: 3rem; }
             .about-grid { grid-template-columns: 1fr; }
@@ -135,9 +143,8 @@
     <header>
         <div class="container">
             <nav>
-                <a href="#" class="logo">Team <span>La Furia</span></a>
-                <!-- El botón de llamar usa JS para obtener el número configurado -->
-                <a href="#" id="nav-call-btn" class="btn">LLAMAR AHORA</a>
+                <a href="#" class="logo" id="site-logo">Team <span>La Furia</span></a>
+                <a href="#" id="nav-call-btn" class="btn">LLAMAR</a>
             </nav>
         </div>
     </header>
@@ -146,10 +153,9 @@
     <section id="hero">
         <div class="container">
             <div class="hero-content">
-                <div class="hero-tag">Para entrenamientos varios</div>
-                <!-- Títulos Editables -->
-                <h1 id="hero-title-display">Domina tu<br>Cuerpo</h1>
-                <p id="hero-sub-display" class="hero-subtitle">
+                <div class="hero-tag" id="hero-tag">Para entrenamientos varios</div>
+                <h1 id="hero-title">Domina tu<br>Cuerpo</h1>
+                <p id="hero-sub" class="hero-subtitle">
                     Entrenamiento intenso, disciplina sin límites y resultados reales. 
                     Únete al equipo y libera tu bestia interior.
                 </p>
@@ -167,11 +173,11 @@
             </div>
             <div class="about-grid">
                 <div class="about-image">
-                    <img src="https://picsum.photos/seed/muscle/600/400" alt="Entrenador">
+                    <img id="about-img" src="" alt="Entrenador">
                 </div>
                 <div class="about-text">
-                    <h3>Rutinas de Alto Impacto</h3>
-                    <p>
+                    <h3 id="about-title">Rutinas de Alto Impacto</h3>
+                    <p id="about-desc">
                         En Team La Furia no buscamos excusas. Diseñamos entrenamientos variados adaptados para 
                         romper tus límites físicos y mentales. 
                     </p>
@@ -191,7 +197,7 @@
                 <!-- Plan 1 -->
                 <div class="price-card">
                     <h3 class="plan-name" id="plan1-name">Plan Intermitente</h3>
-                    <div class="price">$<span id="price-basic-display">10.000</span> <span style="font-size:1rem">/ mes</span></div>
+                    <div class="price">$<span id="price-basic">10.000</span> <span style="font-size:1rem">/ mes</span></div>
                     <div class="price-freq" id="plan1-freq">3 veces a la semana</div>
                     <ul class="features-list">
                         <li>Acceso a equipamiento completo</li>
@@ -203,7 +209,7 @@
                 <!-- Plan 2 -->
                 <div class="price-card featured">
                     <h3 class="plan-name" id="plan2-name">Full Time</h3>
-                    <div class="price">$<span id="price-full-display">15.000</span> <span style="font-size:1rem">/ mes</span></div>
+                    <div class="price">$<span id="price-full">15.000</span> <span style="font-size:1rem">/ mes</span></div>
                     <div class="price-freq" id="plan2-freq">Lunes a Viernes</div>
                     <ul class="features-list">
                         <li>Acceso ilimitado L-V</li>
@@ -220,7 +226,7 @@
     <section id="contact">
         <div class="container">
             <h2>¿Listo para empezar?</h2>
-            <div class="phone-display" id="contact-phone-display">3764 - 1751 - 49</div>
+            <div class="phone-display" id="contact-phone">3764 - 1751 - 49</div>
             <div style="margin-top: 30px;">
                 <a href="#" id="wa-link-main" class="btn contact-btn-large" target="_blank">
                     CONTACTAR POR WHATSAPP
@@ -231,137 +237,297 @@
 
     <footer>
         <div class="container">
-            <div class="footer-logo">TEAM <span style="color:var(--color-primary);">LA FURIA</span></div>
-            <p class="footer-text">© 2026. Todos los derechos reservados.</p>
+            <p class="footer-text">© 2026 Team La Furia. Todos los derechos reservados.</p>
         </div>
     </footer>
 
-    <!-- BOTÓN DE ADMIN -->
-    <button class="admin-toggle" onclick="openAdmin()" title="Configuración">⚙️</button>
+    <!-- BOTÓN ADMIN -->
+    <button class="admin-toggle" onclick="openAdmin()" title="Editar Sitio">🛠️</button>
 
-    <!-- MODAL DE CONFIGURACIÓN -->
+    <!-- MODAL DE EDICIÓN -->
     <div class="modal-overlay" id="admin-modal">
         <div class="modal-content">
             <div class="modal-header">
-                <h3>Panel de Administración</h3>
+                <h3>Editor Visual del Sitio</h3>
                 <button class="close-modal" onclick="closeAdmin()">×</button>
             </div>
-            <div class="form-group">
-                <label>Título Principal (Hero)</label>
-                <input type="text" id="input-hero-title">
+
+            <!-- SECCIÓN HERO -->
+            <div class="form-section">
+                <h4>1. Sección Principal (Hero)</h4>
+                <div class="form-group">
+                    <label>Título Principal</label>
+                    <textarea id="edit-hero-title" rows="2"></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Subtítulo</label>
+                    <textarea id="edit-hero-sub" rows="3"></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Fondo de Pantalla (Imagen)</label>
+                    <div class="image-upload-wrapper">
+                        <img id="preview-hero-bg" class="img-preview" src="" alt="Vista previa">
+                        <div class="file-input-box">
+                            <input type="file" id="file-hero-bg" accept="image/*" onchange="handleImageUpload(this, 'hero-bg')">
+                            <small style="color: #666">Max 500kb recomendado.</small>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="form-group">
-                <label>Subtítulo (Hero)</label>
-                <textarea id="input-hero-sub" rows="3"></textarea>
+
+            <!-- SECCIÓN NOSOTROS -->
+            <div class="form-section">
+                <h4>2. Sección Nosotros</h4>
+                <div class="form-group">
+                    <label>Título</label>
+                    <input type="text" id="edit-about-title">
+                </div>
+                <div class="form-group">
+                    <label>Descripción</label>
+                    <textarea id="edit-about-desc" rows="3"></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Imagen Nosotros</label>
+                    <div class="image-upload-wrapper">
+                        <img id="preview-about-img" class="img-preview" src="" alt="Vista previa">
+                        <div class="file-input-box">
+                            <input type="file" id="file-about-img" accept="image/*" onchange="handleImageUpload(this, 'about-img')">
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="form-group">
-                <label>Teléfono (Solo números)</label>
-                <input type="text" id="input-phone">
+
+            <!-- SECCIÓN PRECIOS -->
+            <div class="form-section">
+                <h4>3. Precios</h4>
+                <div class="form-group">
+                    <label>Nombre Plan 1</label>
+                    <input type="text" id="edit-plan1-name">
+                </div>
+                <div class="form-group">
+                    <label>Precio Plan 1 ($)</label>
+                    <input type="text" id="edit-price-basic">
+                </div>
+                <div class="form-group">
+                    <label>Frecuencia Plan 1</label>
+                    <input type="text" id="edit-plan1-freq">
+                </div>
+                <hr style="border-color: #333; margin: 10px 0;">
+                <div class="form-group">
+                    <label>Nombre Plan 2</label>
+                    <input type="text" id="edit-plan2-name">
+                </div>
+                <div class="form-group">
+                    <label>Precio Plan 2 ($)</label>
+                    <input type="text" id="edit-price-full">
+                </div>
+                <div class="form-group">
+                    <label>Frecuencia Plan 2</label>
+                    <input type="text" id="edit-plan2-freq">
+                </div>
             </div>
-            <div class="form-group">
-                <label>Precio Plan Básico ($)</label>
-                <input type="number" id="input-price-basic">
+
+            <!-- SECCIÓN CONTACTO -->
+            <div class="form-section">
+                <h4>4. Contacto</h4>
+                <div class="form-group">
+                    <label>Teléfono (Solo números)</label>
+                    <input type="text" id="edit-phone">
+                </div>
             </div>
-            <div class="form-group">
-                <label>Precio Plan Full ($)</label>
-                <input type="number" id="input-price-full">
-            </div>
-            <button class="save-btn" onclick="saveSettings()">GUARDAR CAMBIOS</button>
-            <p style="font-size: 0.7rem; color: #555; margin-top: 10px; text-align: center;">
-                * Los cambios se guardan localmente en tu navegador. Para hacerlos permanentes en el servidor, edita el código fuente.
+
+            <button class="save-btn" onclick="saveAll()">💾 GUARDAR Y PREVISUALIZAR</button>
+            
+            <button class="export-btn" onclick="exportConfig()">📋 OBTENER CÓDIGO PARA PUBLICAR</button>
+            <textarea id="export-area" readonly onclick="this.select()"></textarea>
+            
+            <p style="font-size: 0.7rem; color: #666; margin-top: 15px;">
+                * Las imágenes se guardan localmente. Para publicarlas en la web, usa "Obtener Código".
             </p>
         </div>
     </div>
 
-    <!-- LÓGICA DE ADMINISTRACIÓN -->
+    <!-- LÓGICA JAVASCRIPT -->
     <script>
-        // 1. CONFIGURACIÓN POR DEFECTO
-        // Editar estos valores si deseas que el sitio cargue con otros datos por defecto
+        // --- CONFIGURACIÓN POR DEFECTO (LO QUE SE VE AL PRINCIPIO) ---
+        // Puedes editar esto manualmente en el código si lo prefieres.
         const defaultConfig = {
             heroTitle: "Domina tu\nCuerpo",
             heroSub: "Entrenamiento intenso, disciplina sin límites y resultados reales. Únete al equipo y libera tu bestia interior.",
-            phone: "3764175149", 
+            heroBg: "https://picsum.photos/seed/gymdark/1920/1080.jpg", // URL o Base64
+            aboutTitle: "Rutinas de Alto Impacto",
+            aboutDesc: "En Team La Furia no buscamos excusas. Diseñamos entrenamientos variados adaptados para romper tus límites físicos y mentales.",
+            aboutImg: "https://picsum.photos/seed/muscle/600/400",
+            plan1Name: "Plan Intermitente",
             priceBasic: "10.000",
-            priceFull: "15.000"
+            plan1Freq: "3 veces a la semana",
+            plan2Name: "Full Time",
+            priceFull: "15.000",
+            plan2Freq: "Lunes a Viernes",
+            phone: "3764175149"
         };
 
-        // 2. CARGAR DATOS (LocalStorage o Default)
-        function loadSite() {
-            const savedConfig = localStorage.getItem('teamLaFuriaConfig');
-            const config = savedConfig ? JSON.parse(savedConfig) : defaultConfig;
+        let tempConfig = {}; // Para almacenar cambios antes de guardar
 
-            // Actualizar textos en pantalla
-            document.getElementById('hero-title-display').innerText = config.heroTitle;
-            document.getElementById('hero-sub-display').innerText = config.heroSub;
+        // 1. INICIALIZAR
+        document.addEventListener('DOMContentLoaded', () => {
+            const saved = localStorage.getItem('laFuriaFullConfig');
+            const config = saved ? JSON.parse(saved) : defaultConfig;
+            renderSite(config);
+        });
+
+        // 2. RENDERIZAR (PONER DATOS EN EL HTML)
+        function renderSite(config) {
+            // Textos
+            document.getElementById('hero-title').innerText = config.heroTitle;
+            document.getElementById('hero-sub').innerText = config.heroSub;
             
-            // Formatear teléfono
-            const rawPhone = config.phone.replace(/\D/g, ''); // Solo números
+            // Imágenes
+            const heroSection = document.getElementById('hero');
+            heroSection.style.backgroundImage = `linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.7)), url('${config.heroBg}')`;
+            
+            const aboutImg = document.getElementById('about-img');
+            aboutImg.src = config.aboutImg;
+            
+            // Nosotros
+            document.getElementById('about-title').innerText = config.aboutTitle;
+            document.getElementById('about-desc').innerText = config.aboutDesc;
+
+            // Precios
+            document.getElementById('plan1-name').innerText = config.plan1Name;
+            document.getElementById('price-basic').innerText = config.priceBasic;
+            document.getElementById('plan1-freq').innerText = config.plan1Freq;
+            
+            document.getElementById('plan2-name').innerText = config.plan2Name;
+            document.getElementById('price-full').innerText = config.priceFull;
+            document.getElementById('plan2-freq').innerText = config.plan2Freq;
+
+            // Contacto
+            const rawPhone = config.phone.replace(/\D/g, '');
             const displayPhone = rawPhone.length > 7 
                 ? rawPhone.replace(/(\d{4})(\d{4})(\d{3})/, '$1 - $2 - $3') 
                 : rawPhone;
-            document.getElementById('contact-phone-display').innerText = displayPhone;
-
-            // Actualizar precios
-            document.getElementById('price-basic-display').innerText = config.priceBasic;
-            document.getElementById('price-full-display').innerText = config.priceFull;
-
-            // Actualizar Enlaces (Tel y WhatsApp)
-            const telLink = `tel:+54${rawPhone}`; // Asumiendo código país 54 para Argentina, ajustar si es necesario
-            const waLink = `https://wa.me/${rawPhone}`;
+            document.getElementById('contact-phone').innerText = displayPhone;
+            document.getElementById('nav-call-btn').href = `tel:+54${rawPhone}`;
             
-            document.getElementById('nav-call-btn').href = telLink;
+            const waLink = `https://wa.me/${rawPhone}`;
             document.getElementById('wa-link-main').href = waLink;
-
-            // Mensajes predefinidos para WhatsApp
-            document.getElementById('wa-link-basic').href = `${waLink}?text=Hola,%20me%20interesa%20el%20plan%20de%203%20veces`;
-            document.getElementById('wa-link-full').href = `${waLink}?text=Hola,%20me%20interesa%20el%20plan%20Full%20Time`;
+            document.getElementById('wa-link-basic').href = `${waLink}?text=Hola,%20me%20interesa%20el%20plan%20${config.plan1Name.replace(/\s/g, '%20')}`;
+            document.getElementById('wa-link-full').href = `${waLink}?text=Hola,%20me%20interesa%20el%20plan%20${config.plan2Name.replace(/\s/g, '%20')}`;
 
             return config;
         }
 
-        // 3. ABRIR MODAL Y LLENAR INPUTS
+        // 3. ABRIR ADMIN Y LLENAR DATOS
         function openAdmin() {
-            const config = loadSite(); // Recargar por si hubo cambios externos
-            document.getElementById('input-hero-title').value = config.heroTitle;
-            document.getElementById('input-hero-sub').value = config.heroSub;
-            document.getElementById('input-phone').value = config.phone;
-            document.getElementById('input-price-basic').value = config.priceBasic;
-            document.getElementById('input-price-full').value = config.priceFull;
-            
+            const saved = localStorage.getItem('laFuriaFullConfig');
+            const currentConfig = saved ? JSON.parse(saved) : defaultConfig;
+
+            // Llenar inputs de texto
+            document.getElementById('edit-hero-title').value = currentConfig.heroTitle;
+            document.getElementById('edit-hero-sub').value = currentConfig.heroSub;
+            document.getElementById('edit-about-title').value = currentConfig.aboutTitle;
+            document.getElementById('edit-about-desc').value = currentConfig.aboutDesc;
+            document.getElementById('edit-plan1-name').value = currentConfig.plan1Name;
+            document.getElementById('edit-price-basic').value = currentConfig.priceBasic;
+            document.getElementById('edit-plan1-freq').value = currentConfig.plan1Freq;
+            document.getElementById('edit-plan2-name').value = currentConfig.plan2Name;
+            document.getElementById('edit-price-full').value = currentConfig.priceFull;
+            document.getElementById('edit-plan2-freq').value = currentConfig.plan2Freq;
+            document.getElementById('edit-phone').value = currentConfig.phone;
+
+            // Previsualizar imágenes actuales en el admin
+            document.getElementById('preview-hero-bg').src = currentConfig.heroBg;
+            document.getElementById('preview-about-img').src = currentConfig.aboutImg;
+
+            // Cargar config actual en memoria temporal
+            tempConfig = {...currentConfig};
+
             document.getElementById('admin-modal').style.display = 'flex';
         }
 
-        // 4. CERRAR MODAL
         function closeAdmin() {
             document.getElementById('admin-modal').style.display = 'none';
         }
 
-        // 5. GUARDAR CAMBIOS
-        function saveSettings() {
-            const newConfig = {
-                heroTitle: document.getElementById('input-hero-title').value,
-                heroSub: document.getElementById('input-hero-sub').value,
-                phone: document.getElementById('input-phone').value,
-                priceBasic: document.getElementById('input-price-basic').value,
-                priceFull: document.getElementById('input-price-full').value
-            };
+        // 4. MANEJO DE IMÁGENES (FILE READER A BASE64)
+        function handleImageUpload(input, key) {
+            if (input.files && input.files[0]) {
+                const file = input.files[0];
+                
+                // Validación simple de tamaño (Max 2MB para LocalStorage)
+                if (file.size > 2000000) {
+                    alert('La imagen es muy grande. Elige una menor a 2MB o no se guardará.');
+                    input.value = ''; 
+                    return;
+                }
 
-            // Guardar en navegador
-            localStorage.setItem('teamLaFuriaConfig', JSON.stringify(newConfig));
-            
-            // Recargar página
-            loadSite();
-            closeAdmin();
-            
-            // Pequeño feedback visual
-            const btn = document.querySelector('.save-btn');
-            const originalText = btn.innerText;
-            btn.innerText = "¡GUARDADO!";
-            setTimeout(() => { btn.innerText = originalText; }, 2000);
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const base64 = e.target.result;
+                    // Guardar en config temporal
+                    tempConfig[key === 'hero-bg' ? 'heroBg' : 'aboutImg'] = base64;
+                    // Actualizar vista previa en el modal
+                    if(key === 'hero-bg') document.getElementById('preview-hero-bg').src = base64;
+                    if(key === 'about-img') document.getElementById('preview-about-img').src = base64;
+                }
+                reader.readAsDataURL(file);
+            }
         }
 
-        // Inicializar al cargar
-        document.addEventListener('DOMContentLoaded', loadSite);
+        // 5. GUARDAR TODO
+        function saveAll() {
+            // Recoger textos
+            tempConfig.heroTitle = document.getElementById('edit-hero-title').value;
+            tempConfig.heroSub = document.getElementById('edit-hero-sub').value;
+            tempConfig.aboutTitle = document.getElementById('edit-about-title').value;
+            tempConfig.aboutDesc = document.getElementById('edit-about-desc').value;
+            tempConfig.plan1Name = document.getElementById('edit-plan1-name').value;
+            tempConfig.priceBasic = document.getElementById('edit-price-basic').value;
+            tempConfig.plan1Freq = document.getElementById('edit-plan1-freq').value;
+            tempConfig.plan2Name = document.getElementById('edit-plan2-name').value;
+            tempConfig.priceFull = document.getElementById('edit-price-full').value;
+            tempConfig.plan2Freq = document.getElementById('edit-plan2-freq').value;
+            tempConfig.phone = document.getElementById('edit-phone').value;
+
+            // Guardar en Navegador
+            try {
+                localStorage.setItem('laFuriaFullConfig', JSON.stringify(tempConfig));
+                renderSite(tempConfig);
+                closeAdmin();
+                alert('Cambios guardados y aplicados.');
+            } catch (e) {
+                alert('Error: Las imágenes son demasiado grandes para la memoria del navegador. Intenta usar imágenes más pequeñas.');
+            }
+        }
+
+        // 6. EXPORTAR CÓDIGO (Para hacer permanente en el servidor)
+        function exportConfig() {
+            // Actualizamos tempConfig con los textos actuales por si no se guardó
+            saveAllWithoutAlert(); 
+            
+            // Generar string JS
+            const exportString = `const defaultConfig = ${JSON.stringify(tempConfig, null, 4)};`;
+            
+            const area = document.getElementById('export-area');
+            area.style.display = 'block';
+            area.value = `/* Copia esto y reemplaza la variable 'defaultConfig' en tu archivo HTML */\n\n${exportString}`;
+            alert('Código generado abajo. Cópialo para actualizar el sitio web permanentemente.');
+        }
+
+        function saveAllWithoutAlert() {
+            tempConfig.heroTitle = document.getElementById('edit-hero-title').value;
+            tempConfig.heroSub = document.getElementById('edit-hero-sub').value;
+            tempConfig.aboutTitle = document.getElementById('edit-about-title').value;
+            tempConfig.aboutDesc = document.getElementById('edit-about-desc').value;
+            tempConfig.plan1Name = document.getElementById('edit-plan1-name').value;
+            tempConfig.priceBasic = document.getElementById('edit-price-basic').value;
+            tempConfig.plan1Freq = document.getElementById('edit-plan1-freq').value;
+            tempConfig.plan2Name = document.getElementById('edit-plan2-name').value;
+            tempConfig.priceFull = document.getElementById('edit-price-full').value;
+            tempConfig.plan2Freq = document.getElementById('edit-plan2-freq').value;
+            tempConfig.phone = document.getElementById('edit-phone').value;
+        }
 
     </script>
 </body>
