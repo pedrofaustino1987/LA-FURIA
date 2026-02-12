@@ -70,18 +70,27 @@
         
         /* --- HERO --- */
         #hero {
-            height: 100vh; display: flex; align-items: center; position: relative;
+            /* CAMBIO: height a min-height para permitir crecimiento por padding */
+            min-height: 100vh; 
+            display: flex; 
+            flex-direction: column; /* Alineación vertical para centrar contenido */
+            justify-content: center; 
+            align-items: center;
+            position: relative;
             background-size: cover; background-position: center; background-attachment: fixed;
+            
+            /* AJUSTES DE ESPACIADO */
+            padding-top: 200px;   /* Baja el contenido del rombo/título */
+            padding-bottom: 150px; /* Crea espacio debajo del botón antes de la sección "About" */
         }
         .hero-tag { background-color: var(--color-primary); color: white; padding: 5px 15px; font-family: var(--font-heading); text-transform: uppercase; letter-spacing: 2px; font-size: 1.2rem; display: inline-block; margin-bottom: 20px; transform: skewX(-10deg); }
         h1 { font-family: var(--font-heading); font-size: 5rem; line-height: 1; text-transform: uppercase; margin-bottom: 20px; text-shadow: 3px 3px 0px var(--color-primary); white-space: pre-line; }
         .hero-subtitle { font-size: 1.5rem; color: var(--color-gray); margin-bottom: 40px; max-width: 600px; border-left: 4px solid var(--color-primary); padding-left: 20px; }
 
-        /* --- AJUSTE HERO CONTENT (Bajado a 180px) --- */
+        /* --- HERO CONTENT --- */
         .hero-content {
             max-width: 800px;
             z-index: 2;
-            margin-top: 180px; /* <--- AQUÍ ESTÁ EL CAMBIO: Aumentado a 180px */
         }
 
         /* --- ABOUT --- */
@@ -100,7 +109,18 @@
         .price-card.featured { background-color: #1f0505; border-color: var(--color-primary); transform: scale(1.05); z-index: 2; }
         .plan-name { font-family: var(--font-heading); font-size: 1.5rem; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 20px; color: var(--color-gray); }
         .price { font-family: var(--font-heading); font-size: 3.5rem; color: var(--color-light); margin-bottom: 10px; }
-        .price-freq { display: block; color: var(--color-primary); font-weight: bold; margin-bottom: 30px; font-size: 1.1rem; text-transform: uppercase; }
+        .price-freq { display: block; color: var(--color-primary); font-weight: bold; margin-bottom: 20px; font-size: 1.1rem; text-transform: uppercase; }
+        
+        /* Nuevo Estilo: Descripción del plan */
+        .plan-desc {
+            color: #888;
+            font-size: 1rem;
+            margin-bottom: 30px;
+            line-height: 1.5;
+            min-height: 60px; /* Para alinear las tarjetas si el texto difiere */
+            padding: 0 10px;
+        }
+
         .features-list { list-style: none; margin-bottom: 30px; text-align: left; }
         .features-list li { padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.1); color: var(--color-gray); }
 
@@ -161,9 +181,10 @@
             h1 { font-size: 3rem; }
             .about-grid { grid-template-columns: 1fr; }
             .price-card.featured { transform: scale(1); }
-            #site-logo img { height: 40px; } /* Logo más pequeño en móvil */
-            .hero-content {
-                margin-top: 120px; /* Mantenemos margen en móvil pero ajustado */
+            #site-logo img { height: 40px; } 
+            #hero {
+                padding-top: 120px;   /* Menos padding en móvil */
+                padding-bottom: 80px;
             }
         }
     </style>
@@ -231,10 +252,10 @@
                     <h3 class="plan-name" id="plan1-name">Plan Intermitente</h3>
                     <div class="price">$<span id="price-basic">10.000</span> <span style="font-size:1rem">/ mes</span></div>
                     <div class="price-freq" id="plan1-freq">3 veces a la semana</div>
-                    <ul class="features-list">
-                        <li>Acceso a equipamiento completo</li>
-                        <li>Entrenamiento funcional</li>
-                    </ul>
+                    <!-- Nuevo elemento: Descripción -->
+                    <p class="plan-desc" id="plan1-desc">Una opción flexible para adaptar el entrenamiento a tu ritmo de vida.</p>
+                    
+                    <ul class="features-list" id="plan1-features"></ul>
                     <a href="#" id="wa-link-basic" class="btn" target="_blank">ELEGIR PLAN</a>
                 </div>
 
@@ -243,11 +264,10 @@
                     <h3 class="plan-name" id="plan2-name">Full Time</h3>
                     <div class="price">$<span id="price-full">15.000</span> <span style="font-size:1rem">/ mes</span></div>
                     <div class="price-freq" id="plan2-freq">Lunes a Viernes</div>
-                    <ul class="features-list">
-                        <li>Acceso ilimitado L-V</li>
-                        <li>Entrenamiento de fuerza</li>
-                        <li>Plan nutricional básico</li>
-                    </ul>
+                    <!-- Nuevo elemento: Descripción -->
+                    <p class="plan-desc" id="plan2-desc">Dedicación total para alcanzar tus objetivos más ambiciosos.</p>
+                    
+                    <ul class="features-list" id="plan2-features"></ul>
                     <a href="#" id="wa-link-full" class="btn" target="_blank">ELEGIR PLAN</a>
                 </div>
             </div>
@@ -359,7 +379,17 @@
                     <label>Frecuencia Plan 1</label>
                     <input type="text" id="edit-plan1-freq">
                 </div>
-                <hr style="border-color: #333; margin: 10px 0;">
+                <div class="form-group">
+                    <label>Descripción General Plan 1 (Texto libre)</label>
+                    <textarea id="edit-plan1-desc" rows="3"></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Características Plan 1 (Una por línea)</label>
+                    <textarea id="edit-plan1-features" rows="4"></textarea>
+                </div>
+                
+                <hr style="border-color: #333; margin: 20px 0;">
+                
                 <div class="form-group">
                     <label>Nombre Plan 2</label>
                     <input type="text" id="edit-plan2-name">
@@ -371,6 +401,14 @@
                 <div class="form-group">
                     <label>Frecuencia Plan 2</label>
                     <input type="text" id="edit-plan2-freq">
+                </div>
+                <div class="form-group">
+                    <label>Descripción General Plan 2 (Texto libre)</label>
+                    <textarea id="edit-plan2-desc" rows="3"></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Características Plan 2 (Una por línea)</label>
+                    <textarea id="edit-plan2-features" rows="4"></textarea>
                 </div>
             </div>
 
@@ -408,9 +446,13 @@
             plan1Name: "Plan Intermitente",
             priceBasic: "10.000",
             plan1Freq: "3 veces a la semana",
+            plan1Desc: "Una opción flexible para adaptar el entrenamiento a tu ritmo de vida.",
+            plan1Features: "Acceso a equipamiento completo\nEntrenamiento funcional\nSeguimiento básico",
             plan2Name: "Full Time",
             priceFull: "15.000",
             plan2Freq: "Lunes a Viernes",
+            plan2Desc: "Dedicación total para alcanzar tus objetivos más ambiciosos.",
+            plan2Features: "Acceso ilimitado L-V\nEntrenamiento de fuerza\nPlan nutricional básico\nAsesoría prioritaria",
             phone: "3764175149"
         };
 
@@ -428,10 +470,8 @@
             // --- LOGO ---
             const logoEl = document.getElementById('site-logo');
             if (config.logo && config.logo.trim() !== "") {
-                // Si hay logo, insertar imagen
                 logoEl.innerHTML = `<img src="${config.logo}" alt="Logo">`;
             } else {
-                // Si no hay logo, poner texto por defecto
                 logoEl.innerHTML = `Team <span>La Furia</span>`;
             }
 
@@ -450,14 +490,41 @@
             document.getElementById('about-title').innerText = config.aboutTitle;
             document.getElementById('about-desc').innerText = config.aboutDesc;
 
-            // Precios
+            // Precios Plan 1
             document.getElementById('plan1-name').innerText = config.plan1Name;
             document.getElementById('price-basic').innerText = config.priceBasic;
             document.getElementById('plan1-freq').innerText = config.plan1Freq;
+            document.getElementById('plan1-desc').innerText = config.plan1Desc; // Nuevo
             
+            // Renderizar Características Plan 1
+            const ul1 = document.getElementById('plan1-features');
+            ul1.innerHTML = ''; 
+            const features1 = config.plan1Features.split('\n');
+            features1.forEach(feature => {
+                if(feature.trim()) {
+                    const li = document.createElement('li');
+                    li.innerText = feature;
+                    ul1.appendChild(li);
+                }
+            });
+
+            // Precios Plan 2
             document.getElementById('plan2-name').innerText = config.plan2Name;
             document.getElementById('price-full').innerText = config.priceFull;
             document.getElementById('plan2-freq').innerText = config.plan2Freq;
+            document.getElementById('plan2-desc').innerText = config.plan2Desc; // Nuevo
+
+            // Renderizar Características Plan 2
+            const ul2 = document.getElementById('plan2-features');
+            ul2.innerHTML = ''; 
+            const features2 = config.plan2Features.split('\n');
+            features2.forEach(feature => {
+                if(feature.trim()) {
+                    const li = document.createElement('li');
+                    li.innerText = feature;
+                    ul2.appendChild(li);
+                }
+            });
 
             // Contacto
             const rawPhone = config.phone.replace(/\D/g, '');
@@ -485,12 +552,21 @@
             document.getElementById('edit-hero-sub').value = currentConfig.heroSub;
             document.getElementById('edit-about-title').value = currentConfig.aboutTitle;
             document.getElementById('edit-about-desc').value = currentConfig.aboutDesc;
+            
+            // Plan 1
             document.getElementById('edit-plan1-name').value = currentConfig.plan1Name;
             document.getElementById('edit-price-basic').value = currentConfig.priceBasic;
             document.getElementById('edit-plan1-freq').value = currentConfig.plan1Freq;
+            document.getElementById('edit-plan1-desc').value = currentConfig.plan1Desc; // Nuevo
+            document.getElementById('edit-plan1-features').value = currentConfig.plan1Features;
+            
+            // Plan 2
             document.getElementById('edit-plan2-name').value = currentConfig.plan2Name;
             document.getElementById('edit-price-full').value = currentConfig.priceFull;
             document.getElementById('edit-plan2-freq').value = currentConfig.plan2Freq;
+            document.getElementById('edit-plan2-desc').value = currentConfig.plan2Desc; // Nuevo
+            document.getElementById('edit-plan2-features').value = currentConfig.plan2Features;
+            
             document.getElementById('edit-phone').value = currentConfig.phone;
 
             // Previsualizar imágenes actuales en el admin
@@ -555,12 +631,19 @@
             tempConfig.heroSub = document.getElementById('edit-hero-sub').value;
             tempConfig.aboutTitle = document.getElementById('edit-about-title').value;
             tempConfig.aboutDesc = document.getElementById('edit-about-desc').value;
+            
             tempConfig.plan1Name = document.getElementById('edit-plan1-name').value;
             tempConfig.priceBasic = document.getElementById('edit-price-basic').value;
             tempConfig.plan1Freq = document.getElementById('edit-plan1-freq').value;
+            tempConfig.plan1Desc = document.getElementById('edit-plan1-desc').value; // Nuevo
+            tempConfig.plan1Features = document.getElementById('edit-plan1-features').value;
+            
             tempConfig.plan2Name = document.getElementById('edit-plan2-name').value;
             tempConfig.priceFull = document.getElementById('edit-price-full').value;
             tempConfig.plan2Freq = document.getElementById('edit-plan2-freq').value;
+            tempConfig.plan2Desc = document.getElementById('edit-plan2-desc').value; // Nuevo
+            tempConfig.plan2Features = document.getElementById('edit-plan2-features').value;
+            
             tempConfig.phone = document.getElementById('edit-phone').value;
 
             try {
@@ -588,12 +671,19 @@
             tempConfig.heroSub = document.getElementById('edit-hero-sub').value;
             tempConfig.aboutTitle = document.getElementById('edit-about-title').value;
             tempConfig.aboutDesc = document.getElementById('edit-about-desc').value;
+            
             tempConfig.plan1Name = document.getElementById('edit-plan1-name').value;
             tempConfig.priceBasic = document.getElementById('edit-price-basic').value;
             tempConfig.plan1Freq = document.getElementById('edit-plan1-freq').value;
+            tempConfig.plan1Desc = document.getElementById('edit-plan1-desc').value; // Nuevo
+            tempConfig.plan1Features = document.getElementById('edit-plan1-features').value;
+            
             tempConfig.plan2Name = document.getElementById('edit-plan2-name').value;
             tempConfig.priceFull = document.getElementById('edit-price-full').value;
             tempConfig.plan2Freq = document.getElementById('edit-plan2-freq').value;
+            tempConfig.plan2Desc = document.getElementById('edit-plan2-desc').value; // Nuevo
+            tempConfig.plan2Features = document.getElementById('edit-plan2-features').value;
+            
             tempConfig.phone = document.getElementById('edit-phone').value;
         }
 
