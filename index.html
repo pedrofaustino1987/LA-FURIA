@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TEAM LA FURIA | Autoadministrable</title>
+    
+    <!-- Fuentes -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* --- VARIABLES (MANTENIDAS DEL DISEÑO ORIGINAL) --- */
+        :root {
+            --color-primary: #D60000;
+            --color-dark: #0a0a0a;
+            --color-dark-gray: #1a1a1a;
+            --color-light: #ffffff;
+            --color-gray: #b0b0b0;
+            --font-heading: 'Oswald', sans-serif;
+            --font-body: 'Roboto', sans-serif;
+            --transition: all 0.3s ease;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: var(--font-body); background-color: var(--color-dark); color: var(--color-light); line-height: 1.6; overflow-x: hidden; }
+
+        /* --- ESTILOS GENERALES --- */
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        
+        .btn {
+            display: inline-block; background-color: var(--color-primary); color: var(--color-light);
+            padding: 15px 35px; font-family: var(--font-heading); font-size: 1.2rem;
+            text-transform: uppercase; font-weight: 700; text-decoration: none;
+            border: 2px solid var(--color-primary); letter-spacing: 1px;
+            transition: var(--transition); cursor: pointer;
+            clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);
+        }
+        .btn:hover { background-color: transparent; color: var(--color-primary); transform: translateY(-3px); box-shadow: 0 10px 20px rgba(214, 0, 0, 0.3); }
+
+        .section-title { font-family: var(--font-heading); font-size: 3rem; text-align: center; text-transform: uppercase; margin-bottom: 1rem; color: var(--color-light); }
+        .section-header { text-align: center; margin-bottom: 3rem; }
+        .section-title span { color: var(--color-primary); }
+
+        /* --- HEADER --- */
+        header { background-color: rgba(10, 10, 10, 0.95); padding: 20px 0; position: fixed; width: 100%; top: 0; z-index: 1000; border-bottom: 1px solid rgba(255,255,255,0.1); }
+        nav { display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-family: var(--font-heading); font-size: 1.8rem; font-weight: 700; color: var(--color-light); text-transform: uppercase; text-decoration: none; }
+        .logo span { color: var(--color-primary); }
+        
+        /* --- HERO --- */
+        #hero {
+            height: 100vh; display: flex; align-items: center; position: relative;
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.8)), url('https://picsum.photos/seed/gymdark/1920/1080.jpg');
+            background-size: cover; background-position: center; background-attachment: fixed;
+        }
+        .hero-tag { background-color: var(--color-primary); color: white; padding: 5px 15px; font-family: var(--font-heading); text-transform: uppercase; letter-spacing: 2px; font-size: 1.2rem; display: inline-block; margin-bottom: 20px; transform: skewX(-10deg); }
+        h1 { font-family: var(--font-heading); font-size: 5rem; line-height: 1; text-transform: uppercase; margin-bottom: 20px; text-shadow: 3px 3px 0px var(--color-primary); white-space: pre-line; }
+        .hero-subtitle { font-size: 1.5rem; color: var(--color-gray); margin-bottom: 40px; max-width: 600px; border-left: 4px solid var(--color-primary); padding-left: 20px; }
+
+        /* --- ABOUT --- */
+        #about { padding: 100px 0; background-color: var(--color-dark-gray); position: relative; }
+        .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; align-items: center; }
+        .about-text h3 { font-family: var(--font-heading); font-size: 2.5rem; margin-bottom: 20px; text-transform: uppercase; }
+        .about-text p { color: var(--color-gray); font-size: 1.1rem; margin-bottom: 20px; }
+        .about-image img { width: 100%; border-radius: 4px; filter: grayscale(100%) contrast(120%); border: 1px solid var(--color-gray); transition: var(--transition); }
+        .about-image img:hover { filter: grayscale(0%) contrast(100%); border-color: var(--color-primary); }
+
+        /* --- PRICING --- */
+        #pricing { padding: 100px 0; background-color: var(--color-dark); }
+        .pricing-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; justify-content: center; max-width: 1000px; margin: 0 auto; }
+        .price-card { background-color: var(--color-dark-gray); border: 1px solid #333; padding: 40px; text-align: center; transition: var(--transition); clip-path: polygon(20px 0, 100% 0, 100% calc(100% - 20px), calc(100% - 20px) 100%, 0 100%, 0 20px); }
+        .price-card:hover { transform: translateY(-10px); border-color: var(--color-primary); box-shadow: 0 0 30px rgba(214, 0, 0, 0.15); }
+        .price-card.featured { background-color: #1f0505; border-color: var(--color-primary); transform: scale(1.05); z-index: 2; }
+        .plan-name { font-family: var(--font-heading); font-size: 1.5rem; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 20px; color: var(--color-gray); }
+        .price { font-family: var(--font-heading); font-size: 3.5rem; color: var(--color-light); margin-bottom: 10px; }
+        .price-freq { display: block; color: var(--color-primary); font-weight: bold; margin-bottom: 30px; font-size: 1.1rem; text-transform: uppercase; }
+        .features-list { list-style: none; margin-bottom: 30px; text-align: left; }
+        .features-list li { padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.1); color: var(--color-gray); }
+        .features-list li::before { content: '✖'; color: var(--color-primary); margin-right: 10px; font-weight: bold; }
+
+        /* --- CONTACT --- */
+        #contact { padding: 80px 0; background: linear-gradient(45deg, var(--color-primary) 0%, #8a0000 100%); text-align: center; color: white; }
+        #contact h2 { font-family: var(--font-heading); font-size: 3rem; margin-bottom: 20px; text-transform: uppercase; }
+        .phone-display { font-family: var(--font-heading); font-size: 2.5rem; margin-top: 20px; letter-spacing: 2px; text-shadow: 2px 2px 4px rgba(0,0,0,0.3); }
+        .contact-btn-large { background-color: white; color: var(--color-primary); border-color: white; padding: 20px 50px; font-size: 1.5rem; }
+        .contact-btn-large:hover { background-color: black; color: white; border-color: black; }
+
+        /* --- ADMIN PANEL & MODAL --- */
+        .admin-toggle {
+            position: fixed; bottom: 20px; right: 20px; 
+            background: #333; color: #fff; width: 50px; height: 50px; 
+            border-radius: 50%; border: 2px solid var(--color-primary);
+            font-size: 24px; cursor: pointer; z-index: 2000;
+            display: flex; justify-content: center; align-items: center;
+            opacity: 0.3; transition: 0.3s;
+        }
+        .admin-toggle:hover { opacity: 1; transform: rotate(90deg); }
+
+        .modal-overlay {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.8); z-index: 3000;
+            justify-content: center; align-items: center;
+        }
+        .modal-content {
+            background: #1a1a1a; padding: 30px; border: 1px solid #333; width: 90%; max-width: 500px;
+            border-radius: 8px; box-shadow: 0 0 20px rgba(214,0,0,0.2);
+        }
+        .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; border-bottom: 1px solid #333; padding-bottom: 10px; }
+        .modal-header h3 { font-family: var(--font-heading); color: var(--color-primary); text-transform: uppercase; }
+        .close-modal { background: none; border: none; color: #fff; font-size: 24px; cursor: pointer; }
+        
+        .form-group { margin-bottom: 15px; }
+        .form-group label { display: block; margin-bottom: 5px; color: #888; font-size: 0.9rem; }
+        .form-group input, .form-group textarea {
+            width: 100%; background: #0a0a0a; border: 1px solid #333; color: white; padding: 10px; font-family: inherit;
+        }
+        .form-group input:focus { border-color: var(--color-primary); outline: none; }
+        .save-btn { width: 100%; margin-top: 10px; background: var(--color-primary); border: none; padding: 12px; color: white; font-weight: bold; cursor: pointer; text-transform: uppercase; }
+        .save-btn:hover { background: #b00000; }
+
+        /* --- RESPONSIVE --- */
+        @media (max-width: 768px) {
+            h1 { font-size: 3rem; }
+            .about-grid { grid-template-columns: 1fr; }
+            .price-card.featured { transform: scale(1); }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- NAVIGACIÓN -->
+    <header>
+        <div class="container">
+            <nav>
+                <a href="#" class="logo">Team <span>La Furia</span></a>
+                <!-- El botón de llamar usa JS para obtener el número configurado -->
+                <a href="#" id="nav-call-btn" class="btn">LLAMAR AHORA</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- HERO SECTION -->
+    <section id="hero">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-tag">Para entrenamientos varios</div>
+                <!-- Títulos Editables -->
+                <h1 id="hero-title-display">Domina tu<br>Cuerpo</h1>
+                <p id="hero-sub-display" class="hero-subtitle">
+                    Entrenamiento intenso, disciplina sin límites y resultados reales. 
+                    Únete al equipo y libera tu bestia interior.
+                </p>
+                <a href="#pricing" class="btn">VER PLANES</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- SOBRE NOSOTROS -->
+    <section id="about">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">La <span>Furia</span></h2>
+                <p style="color: #888;">No es solo un gimnasio, es una mentalidad.</p>
+            </div>
+            <div class="about-grid">
+                <div class="about-image">
+                    <img src="https://picsum.photos/seed/muscle/600/400" alt="Entrenador">
+                </div>
+                <div class="about-text">
+                    <h3>Rutinas de Alto Impacto</h3>
+                    <p>
+                        En Team La Furia no buscamos excusas. Diseñamos entrenamientos variados adaptados para 
+                        romper tus límites físicos y mentales. 
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PRECIOS -->
+    <section id="pricing">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Nuestros <span>Planes</span></h2>
+            </div>
+
+            <div class="pricing-grid">
+                <!-- Plan 1 -->
+                <div class="price-card">
+                    <h3 class="plan-name" id="plan1-name">Plan Intermitente</h3>
+                    <div class="price">$<span id="price-basic-display">10.000</span> <span style="font-size:1rem">/ mes</span></div>
+                    <div class="price-freq" id="plan1-freq">3 veces a la semana</div>
+                    <ul class="features-list">
+                        <li>Acceso a equipamiento completo</li>
+                        <li>Entrenamiento funcional</li>
+                    </ul>
+                    <a href="#" id="wa-link-basic" class="btn" target="_blank">ELEGIR PLAN</a>
+                </div>
+
+                <!-- Plan 2 -->
+                <div class="price-card featured">
+                    <h3 class="plan-name" id="plan2-name">Full Time</h3>
+                    <div class="price">$<span id="price-full-display">15.000</span> <span style="font-size:1rem">/ mes</span></div>
+                    <div class="price-freq" id="plan2-freq">Lunes a Viernes</div>
+                    <ul class="features-list">
+                        <li>Acceso ilimitado L-V</li>
+                        <li>Entrenamiento de fuerza</li>
+                        <li>Plan nutricional básico</li>
+                    </ul>
+                    <a href="#" id="wa-link-full" class="btn" target="_blank">ELEGIR PLAN</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTACTO -->
+    <section id="contact">
+        <div class="container">
+            <h2>¿Listo para empezar?</h2>
+            <div class="phone-display" id="contact-phone-display">3764 - 1751 - 49</div>
+            <div style="margin-top: 30px;">
+                <a href="#" id="wa-link-main" class="btn contact-btn-large" target="_blank">
+                    CONTACTAR POR WHATSAPP
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-logo">TEAM <span style="color:var(--color-primary);">LA FURIA</span></div>
+            <p class="footer-text">© 2026. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <!-- BOTÓN DE ADMIN -->
+    <button class="admin-toggle" onclick="openAdmin()" title="Configuración">⚙️</button>
+
+    <!-- MODAL DE CONFIGURACIÓN -->
+    <div class="modal-overlay" id="admin-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Panel de Administración</h3>
+                <button class="close-modal" onclick="closeAdmin()">×</button>
+            </div>
+            <div class="form-group">
+                <label>Título Principal (Hero)</label>
+                <input type="text" id="input-hero-title">
+            </div>
+            <div class="form-group">
+                <label>Subtítulo (Hero)</label>
+                <textarea id="input-hero-sub" rows="3"></textarea>
+            </div>
+            <div class="form-group">
+                <label>Teléfono (Solo números)</label>
+                <input type="text" id="input-phone">
+            </div>
+            <div class="form-group">
+                <label>Precio Plan Básico ($)</label>
+                <input type="number" id="input-price-basic">
+            </div>
+            <div class="form-group">
+                <label>Precio Plan Full ($)</label>
+                <input type="number" id="input-price-full">
+            </div>
+            <button class="save-btn" onclick="saveSettings()">GUARDAR CAMBIOS</button>
+            <p style="font-size: 0.7rem; color: #555; margin-top: 10px; text-align: center;">
+                * Los cambios se guardan localmente en tu navegador. Para hacerlos permanentes en el servidor, edita el código fuente.
+            </p>
+        </div>
+    </div>
+
+    <!-- LÓGICA DE ADMINISTRACIÓN -->
+    <script>
+        // 1. CONFIGURACIÓN POR DEFECTO
+        // Editar estos valores si deseas que el sitio cargue con otros datos por defecto
+        const defaultConfig = {
+            heroTitle: "Domina tu\nCuerpo",
+            heroSub: "Entrenamiento intenso, disciplina sin límites y resultados reales. Únete al equipo y libera tu bestia interior.",
+            phone: "3764175149", 
+            priceBasic: "10.000",
+            priceFull: "15.000"
+        };
+
+        // 2. CARGAR DATOS (LocalStorage o Default)
+        function loadSite() {
+            const savedConfig = localStorage.getItem('teamLaFuriaConfig');
+            const config = savedConfig ? JSON.parse(savedConfig) : defaultConfig;
+
+            // Actualizar textos en pantalla
+            document.getElementById('hero-title-display').innerText = config.heroTitle;
+            document.getElementById('hero-sub-display').innerText = config.heroSub;
+            
+            // Formatear teléfono
+            const rawPhone = config.phone.replace(/\D/g, ''); // Solo números
+            const displayPhone = rawPhone.length > 7 
+                ? rawPhone.replace(/(\d{4})(\d{4})(\d{3})/, '$1 - $2 - $3') 
+                : rawPhone;
+            document.getElementById('contact-phone-display').innerText = displayPhone;
+
+            // Actualizar precios
+            document.getElementById('price-basic-display').innerText = config.priceBasic;
+            document.getElementById('price-full-display').innerText = config.priceFull;
+
+            // Actualizar Enlaces (Tel y WhatsApp)
+            const telLink = `tel:+54${rawPhone}`; // Asumiendo código país 54 para Argentina, ajustar si es necesario
+            const waLink = `https://wa.me/${rawPhone}`;
+            
+            document.getElementById('nav-call-btn').href = telLink;
+            document.getElementById('wa-link-main').href = waLink;
+
+            // Mensajes predefinidos para WhatsApp
+            document.getElementById('wa-link-basic').href = `${waLink}?text=Hola,%20me%20interesa%20el%20plan%20de%203%20veces`;
+            document.getElementById('wa-link-full').href = `${waLink}?text=Hola,%20me%20interesa%20el%20plan%20Full%20Time`;
+
+            return config;
+        }
+
+        // 3. ABRIR MODAL Y LLENAR INPUTS
+        function openAdmin() {
+            const config = loadSite(); // Recargar por si hubo cambios externos
+            document.getElementById('input-hero-title').value = config.heroTitle;
+            document.getElementById('input-hero-sub').value = config.heroSub;
+            document.getElementById('input-phone').value = config.phone;
+            document.getElementById('input-price-basic').value = config.priceBasic;
+            document.getElementById('input-price-full').value = config.priceFull;
+            
+            document.getElementById('admin-modal').style.display = 'flex';
+        }
+
+        // 4. CERRAR MODAL
+        function closeAdmin() {
+            document.getElementById('admin-modal').style.display = 'none';
+        }
+
+        // 5. GUARDAR CAMBIOS
+        function saveSettings() {
+            const newConfig = {
+                heroTitle: document.getElementById('input-hero-title').value,
+                heroSub: document.getElementById('input-hero-sub').value,
+                phone: document.getElementById('input-phone').value,
+                priceBasic: document.getElementById('input-price-basic').value,
+                priceFull: document.getElementById('input-price-full').value
+            };
+
+            // Guardar en navegador
+            localStorage.setItem('teamLaFuriaConfig', JSON.stringify(newConfig));
+            
+            // Recargar página
+            loadSite();
+            closeAdmin();
+            
+            // Pequeño feedback visual
+            const btn = document.querySelector('.save-btn');
+            const originalText = btn.innerText;
+            btn.innerText = "¡GUARDADO!";
+            setTimeout(() => { btn.innerText = originalText; }, 2000);
+        }
+
+        // Inicializar al cargar
+        document.addEventListener('DOMContentLoaded', loadSite);
+
+    </script>
+</body>
+</html>
