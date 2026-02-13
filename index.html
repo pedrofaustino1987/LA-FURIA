@@ -101,31 +101,121 @@
         .about-image img { width: 100%; border-radius: 4px; filter: grayscale(100%) contrast(120%); border: 1px solid var(--color-gray); transition: var(--transition); }
         .about-image img:hover { filter: grayscale(0%) contrast(100%); border-color: var(--color-primary); }
 
-        /* --- PRICING --- */
-        #pricing { padding: 100px 0; background-color: var(--color-dark); }
-        .pricing-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; justify-content: center; max-width: 1000px; margin: 0 auto; }
-        .price-card { background-color: var(--color-dark-gray); border: 1px solid #333; padding: 40px; text-align: center; transition: var(--transition); clip-path: polygon(20px 0, 100% 0, 100% calc(100% - 20px), calc(100% - 20px) 100%, 0 100%, 0 20px); }
-        .price-card:hover { transform: translateY(-10px); border-color: var(--color-primary); box-shadow: 0 0 30px rgba(214, 0, 0, 0.15); }
-        .price-card.featured { background-color: #1f0505; border-color: var(--color-primary); transform: scale(1.05); z-index: 2; }
-        .plan-name { font-family: var(--font-heading); font-size: 1.5rem; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 20px; color: var(--color-gray); }
-        .price { font-family: var(--font-heading); font-size: 3.5rem; color: var(--color-light); margin-bottom: 10px; }
-        .price-freq { display: block; color: var(--color-primary); font-weight: bold; margin-bottom: 20px; font-size: 1.1rem; text-transform: uppercase; }
+        /* --- PRICING (NUEVO DISEÑO) --- */
+        #pricing { padding: 100px 0; background-color: var(--color-dark); position: relative; }
+        
+        .pricing-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 40px; justify-content: center; max-width: 1100px; margin: 0 auto; }
+        
+        .price-card { 
+            background-color: var(--color-dark-gray); 
+            border: 1px solid #333; 
+            padding: 0 0 40px 0; /* Padding lateral quitado, solo abajo */
+            text-align: center; 
+            transition: var(--transition); 
+            position: relative;
+            overflow: hidden; /* Para el efecto de header */
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Barra de decoración superior */
+        .price-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 6px;
+            background: var(--color-primary);
+            opacity: 0.7;
+        }
+
+        .price-card:hover { 
+            transform: translateY(-10px); 
+            border-color: #555; 
+        }
+        
+        /* Cabecera interna de la tarjeta */
+        .card-header {
+            padding: 40px 20px 20px 20px;
+            background: linear-gradient(to bottom, rgba(255,255,255,0.03), transparent);
+        }
+
+        .plan-name { font-family: var(--font-heading); font-size: 1.8rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px; color: var(--color-light); font-weight: 700; }
+        
+        .price { font-family: var(--font-heading); font-size: 4rem; color: var(--color-light); line-height: 1; margin-bottom: 5px; display: block; }
+        .price span { font-size: 1.2rem; color: var(--color-gray); vertical-align: super; }
+        
+        .price-freq { color: var(--color-primary); font-weight: bold; text-transform: uppercase; letter-spacing: 1px; font-size: 1rem; margin-bottom: 25px; display: block;}
         
         /* Nuevo Estilo: Descripción del plan */
         .plan-desc {
-            color: #888;
+            color: #aaa;
             font-size: 1rem;
             margin-bottom: 30px;
-            line-height: 1.5;
-            min-height: 60px; /* Para alinear las tarjetas si el texto difiere */
-            padding: 0 10px;
+            line-height: 1.6;
+            padding: 0 20px;
+            min-height: 60px; 
         }
 
-        .features-list { list-style: none; margin-bottom: 30px; text-align: left; }
-        .features-list li { padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.1); color: var(--color-gray); }
+        /* Lista de características */
+        .features-list { 
+            list-style: none; 
+            margin-bottom: 40px; 
+            text-align: left; 
+            padding: 0 30px; 
+            flex-grow: 1; /* Hace que el botón se alinee abajo */
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        
+        /* Iconos de Check en la lista */
+        .features-list li { 
+            color: #ccc; 
+            font-size: 1rem; 
+            position: relative;
+            padding-left: 30px;
+            line-height: 1.4;
+            border-bottom: none; /* Quitamos la línea anterior */
+        }
+        
+        .features-list li::before {
+            content: '✓'; /* Cambiado de X a Check */
+            color: var(--color-primary);
+            position: absolute;
+            left: 0;
+            top: 0;
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+
+        /* Botón dentro de la tarjeta */
+        .card-action {
+            padding: 0 20px;
+        }
+        .card-action .btn { width: 100%; display: block; text-align: center; }
+
+        /* TARJETA DESTACADA (FULL TIME) */
+        .price-card.featured { 
+            background-color: #1f0505; 
+            border: 1px solid var(--color-primary);
+            transform: scale(1.05); 
+            z-index: 2; 
+            box-shadow: 0 0 30px rgba(214, 0, 0, 0.15);
+        }
+
+        .price-card.featured::before {
+            height: 8px;
+            opacity: 1;
+            box-shadow: 0 0 15px var(--color-primary); /* Glow rojo arriba */
+        }
+
+        .price-card.featured:hover { 
+            transform: scale(1.08); 
+            box-shadow: 0 0 40px rgba(214, 0, 0, 0.3);
+            border-color: #ff3333;
+        }
 
         /* --- CONTACT --- */
-        #contact { padding: 80px 0; background: linear-gradient(45deg, var(--color-primary) 0%, #8a0000 100%); text-align: center; color: white; }
+        #contact { padding: 80px 0; background: linear-gradient(45deg, var(--color-primary) 0%, #8a0000 100%); text-align: center; color: white; position: relative; z-index: 2; }
         #contact h2 { font-family: var(--font-heading); font-size: 3rem; margin-bottom: 20px; text-transform: uppercase; }
         .phone-display { font-family: var(--font-heading); font-size: 2.5rem; margin-top: 20px; letter-spacing: 2px; text-shadow: 2px 2px 4px rgba(0,0,0,0.3); }
         .contact-btn-large { background-color: white; color: var(--color-primary); border-color: white; padding: 20px 50px; font-size: 1.5rem; }
@@ -186,6 +276,7 @@
                 padding-top: 120px;   /* Menos padding en móvil */
                 padding-bottom: 80px;
             }
+            .pricing-grid { gap: 30px; }
         }
     </style>
 </head>
@@ -239,7 +330,7 @@
         </div>
     </section>
 
-    <!-- PRECIOS -->
+    <!-- PRECIOS (DISEÑO NUEVO) -->
     <section id="pricing">
         <div class="container">
             <div class="section-header">
@@ -249,26 +340,44 @@
             <div class="pricing-grid">
                 <!-- Plan 1 -->
                 <div class="price-card">
-                    <h3 class="plan-name" id="plan1-name">Plan Intermitente</h3>
-                    <div class="price">$<span id="price-basic">10.000</span> <span style="font-size:1rem">/ mes</span></div>
-                    <div class="price-freq" id="plan1-freq">3 veces a la semana</div>
-                    <!-- Nuevo elemento: Descripción -->
+                    <!-- Header Visual -->
+                    <div class="card-header">
+                        <h3 class="plan-name" id="plan1-name">Plan Intermitente</h3>
+                        <div class="price">$<span id="price-basic">10.000</span><span>/mes</span></div>
+                        <div class="price-freq" id="plan1-freq">3 veces a la semana</div>
+                    </div>
+                    
+                    <!-- Descripción -->
                     <p class="plan-desc" id="plan1-desc">Una opción flexible para adaptar el entrenamiento a tu ritmo de vida.</p>
                     
+                    <!-- Lista -->
                     <ul class="features-list" id="plan1-features"></ul>
-                    <a href="#" id="wa-link-basic" class="btn" target="_blank">ELEGIR PLAN</a>
+                    
+                    <!-- Botón -->
+                    <div class="card-action">
+                        <a href="#" id="wa-link-basic" class="btn" target="_blank">ELEGIR PLAN</a>
+                    </div>
                 </div>
 
                 <!-- Plan 2 -->
                 <div class="price-card featured">
-                    <h3 class="plan-name" id="plan2-name">Full Time</h3>
-                    <div class="price">$<span id="price-full">15.000</span> <span style="font-size:1rem">/ mes</span></div>
-                    <div class="price-freq" id="plan2-freq">Lunes a Viernes</div>
-                    <!-- Nuevo elemento: Descripción -->
+                    <!-- Header Visual -->
+                    <div class="card-header">
+                        <h3 class="plan-name" id="plan2-name">Full Time</h3>
+                        <div class="price">$<span id="price-full">15.000</span><span>/mes</span></div>
+                        <div class="price-freq" id="plan2-freq">Lunes a Viernes</div>
+                    </div>
+
+                    <!-- Descripción -->
                     <p class="plan-desc" id="plan2-desc">Dedicación total para alcanzar tus objetivos más ambiciosos.</p>
                     
+                    <!-- Lista -->
                     <ul class="features-list" id="plan2-features"></ul>
-                    <a href="#" id="wa-link-full" class="btn" target="_blank">ELEGIR PLAN</a>
+                    
+                    <!-- Botón -->
+                    <div class="card-action">
+                        <a href="#" id="wa-link-full" class="btn" target="_blank">ELEGIR PLAN</a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -293,8 +402,8 @@
         </div>
     </footer>
 
-    <!-- BOTÓN ADMIN -->
-    <button class="admin-toggle" onclick="openAdmin()" title="Editar Sitio">🛠️</button>
+    <!-- BOTÓN ADMIN (SEGURO) -->
+    <button class="admin-toggle" onclick="checkPassword()" title="Editar Sitio">🛠️</button>
 
     <!-- MODAL DE EDICIÓN -->
     <div class="modal-overlay" id="admin-modal">
@@ -434,9 +543,21 @@
 
     <!-- LÓGICA JAVASCRIPT -->
     <script>
+        // --- SEGURIDAD: CONTRASEÑA ---
+        const ADMIN_PASSWORD = 'admin'; 
+
+        function checkPassword() {
+            const input = prompt("Ingrese la contraseña de administrador:");
+            if (input === ADMIN_PASSWORD) {
+                openAdmin();
+            } else if (input !== null) {
+                alert("Contraseña incorrecta.");
+            }
+        }
+
         // --- CONFIGURACIÓN POR DEFECTO ---
         const defaultConfig = {
-            logo: "", // Vacío por defecto, mostrará texto
+            logo: "", 
             heroTitle: "Domina tu\nCuerpo",
             heroSub: "Entrenamiento intenso, disciplina sin límites y resultados reales. Únete al equipo y libera tu bestia interior.",
             heroBg: "https://picsum.photos/seed/gymdark/1920/1080.jpg", 
@@ -494,7 +615,7 @@
             document.getElementById('plan1-name').innerText = config.plan1Name;
             document.getElementById('price-basic').innerText = config.priceBasic;
             document.getElementById('plan1-freq').innerText = config.plan1Freq;
-            document.getElementById('plan1-desc').innerText = config.plan1Desc; // Nuevo
+            document.getElementById('plan1-desc').innerText = config.plan1Desc; 
             
             // Renderizar Características Plan 1
             const ul1 = document.getElementById('plan1-features');
@@ -512,7 +633,7 @@
             document.getElementById('plan2-name').innerText = config.plan2Name;
             document.getElementById('price-full').innerText = config.priceFull;
             document.getElementById('plan2-freq').innerText = config.plan2Freq;
-            document.getElementById('plan2-desc').innerText = config.plan2Desc; // Nuevo
+            document.getElementById('plan2-desc').innerText = config.plan2Desc; 
 
             // Renderizar Características Plan 2
             const ul2 = document.getElementById('plan2-features');
@@ -557,14 +678,14 @@
             document.getElementById('edit-plan1-name').value = currentConfig.plan1Name;
             document.getElementById('edit-price-basic').value = currentConfig.priceBasic;
             document.getElementById('edit-plan1-freq').value = currentConfig.plan1Freq;
-            document.getElementById('edit-plan1-desc').value = currentConfig.plan1Desc; // Nuevo
+            document.getElementById('edit-plan1-desc').value = currentConfig.plan1Desc; 
             document.getElementById('edit-plan1-features').value = currentConfig.plan1Features;
             
             // Plan 2
             document.getElementById('edit-plan2-name').value = currentConfig.plan2Name;
             document.getElementById('edit-price-full').value = currentConfig.priceFull;
             document.getElementById('edit-plan2-freq').value = currentConfig.plan2Freq;
-            document.getElementById('edit-plan2-desc').value = currentConfig.plan2Desc; // Nuevo
+            document.getElementById('edit-plan2-desc').value = currentConfig.plan2Desc; 
             document.getElementById('edit-plan2-features').value = currentConfig.plan2Features;
             
             document.getElementById('edit-phone').value = currentConfig.phone;
@@ -635,13 +756,13 @@
             tempConfig.plan1Name = document.getElementById('edit-plan1-name').value;
             tempConfig.priceBasic = document.getElementById('edit-price-basic').value;
             tempConfig.plan1Freq = document.getElementById('edit-plan1-freq').value;
-            tempConfig.plan1Desc = document.getElementById('edit-plan1-desc').value; // Nuevo
+            tempConfig.plan1Desc = document.getElementById('edit-plan1-desc').value; 
             tempConfig.plan1Features = document.getElementById('edit-plan1-features').value;
             
             tempConfig.plan2Name = document.getElementById('edit-plan2-name').value;
             tempConfig.priceFull = document.getElementById('edit-price-full').value;
             tempConfig.plan2Freq = document.getElementById('edit-plan2-freq').value;
-            tempConfig.plan2Desc = document.getElementById('edit-plan2-desc').value; // Nuevo
+            tempConfig.plan2Desc = document.getElementById('edit-plan2-desc').value; 
             tempConfig.plan2Features = document.getElementById('edit-plan2-features').value;
             
             tempConfig.phone = document.getElementById('edit-phone').value;
@@ -675,13 +796,13 @@
             tempConfig.plan1Name = document.getElementById('edit-plan1-name').value;
             tempConfig.priceBasic = document.getElementById('edit-price-basic').value;
             tempConfig.plan1Freq = document.getElementById('edit-plan1-freq').value;
-            tempConfig.plan1Desc = document.getElementById('edit-plan1-desc').value; // Nuevo
+            tempConfig.plan1Desc = document.getElementById('edit-plan1-desc').value; 
             tempConfig.plan1Features = document.getElementById('edit-plan1-features').value;
             
             tempConfig.plan2Name = document.getElementById('edit-plan2-name').value;
             tempConfig.priceFull = document.getElementById('edit-price-full').value;
             tempConfig.plan2Freq = document.getElementById('edit-plan2-freq').value;
-            tempConfig.plan2Desc = document.getElementById('edit-plan2-desc').value; // Nuevo
+            tempConfig.plan2Desc = document.getElementById('edit-plan2-desc').value; 
             tempConfig.plan2Features = document.getElementById('edit-plan2-features').value;
             
             tempConfig.phone = document.getElementById('edit-phone').value;
